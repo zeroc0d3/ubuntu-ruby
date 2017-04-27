@@ -1,4 +1,4 @@
-# Ruby
+# Ubuntu-Ruby
 
 Docker base image for Ubuntu/Ruby.
 
