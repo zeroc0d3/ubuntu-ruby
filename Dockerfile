@@ -17,7 +17,7 @@ RUN apt-get update && \
 
 # Install Ruby 2.4.1
 RUN cd /tmp &&\
-  wget -O ruby-2.4.1.tar.gz https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.4.1.tar.gz &&\
+  wget -O ruby-2.4.1.tar.gz https://cache.ruby-lang.org/pub/ruby/2.4/ruby-2.4.1.tar.gz &&\
   tar -xzvf ruby-2.4.1.tar.gz &&\
   cd ruby-2.4.1/ &&\
   ./configure &&\
