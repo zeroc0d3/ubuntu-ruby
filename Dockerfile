@@ -42,10 +42,15 @@ RUN gem install foreman
 
 
 # Install & configure SSH
-RUN /etc/init.d/sshd start
-RUN /etc/init.d/sshd enable
-RUN ufw allow ssh
-RUN ufw reload
-COPY ssh_config /etc/ssh
-RUN /etc/init.d/sshd reload
-RUN /etc/init.d/sshd restart
+RUN mkdir /var/run/sshd
+RUN echo 'root:screencast' | chpasswd
+RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+
+# SSH login fix. Otherwise user is kicked off after login
+RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+
+ENV NOTVISIBLE "in users profile"
+RUN echo "export VISIBLE=now" >> /etc/profile
+
+EXPOSE 22
+CMD ["/usr/sbin/sshd", "-D"]
