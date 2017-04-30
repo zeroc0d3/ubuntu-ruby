@@ -42,10 +42,10 @@ RUN gem install foreman
 
 
 # Install & configure SSH
-RUN systemctl start sshd
-RUN systemctl enable sshd
+RUN /etc/init.d/sshd start
+RUN /etc/init.d/sshd enable
 RUN ufw allow ssh
 RUN ufw reload
 COPY ssh_config /etc/ssh
-RUN systemctl reload sshd
-RUN systemctl restart sshd
+RUN /etc/init.d/sshd reload
+RUN /etc/init.d/sshd restart
