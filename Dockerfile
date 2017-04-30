@@ -7,7 +7,8 @@ RUN apt-get update && \
     apt-get install -y wget curl \
     build-essential git git-core \
     zlib1g-dev libssl-dev libreadline-dev libyaml-dev \
-    libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev && \
+    libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev \
+    openssh-server openssh-client && \
 
     # Cleanup
     apt-get clean && \
@@ -35,3 +36,16 @@ RUN echo "gem: --no-document" > ~/.gemrc
 
 # Install bundler
 RUN gem install bundler
+
+# Install foreman
+RUN gem install foreman
+
+
+# Install & configure SSH
+RUN systemctl start sshd
+RUN systemctl enable sshd
+RUN ufw allow ssh
+RUN ufw reload
+COPY ssh_config /etc/ssh
+RUN systemctl reload sshd
+RUN systemctl restart sshd
