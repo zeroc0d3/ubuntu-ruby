@@ -40,10 +40,9 @@ RUN gem install bundler
 # Install foreman
 RUN gem install foreman
 
-
 # Install & configure SSH
 # Default ssh root password: secret
-RUN mkdir /var/run/sshd
+CMD mkdir -p /var/run/sshd
 RUN echo 'root:secret' | chpasswd
 RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 
